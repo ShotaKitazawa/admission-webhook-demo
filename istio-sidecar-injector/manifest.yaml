@@ -70,6 +70,7 @@ spec:
   loadBalancerIP: 192.168.0.55
   ports:
   - port: 443
+    nodePort: 30443
   selector:
     istio: sidecar-injector
   type: LoadBalancer
@@ -179,7 +180,6 @@ webhooks:
         name: istio-sidecar-injector
         namespace: istio-system
         path: "/inject"
-      caBundle: ""
     rules:
       - operations: [ "CREATE" ]
         apiGroups: [""]

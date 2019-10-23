@@ -1,0 +1,20 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: ingress-host-validator-webhook
+  labels:
+    app: ingress-host-validator-webhook
+    kind: validating
+webhooks:
+  - name: ingress-host-validator-webhook.slok.xyz
+    clientConfig:
+      service:
+        name: ingress-host-validator-webhook
+        namespace: default
+        path: "/validating"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM1akNDQWM0Q0NRQ3p5MkN0d0oxOWp6QU5CZ2txaGtpRzl3MEJBUXNGQURBMU1UTXdNUVlEVlFRRERDcHAKYm1keVpYTnpMV2h2YzNRdGRtRnNhV1JoZEc5eUxYZGxZbWh2YjJzdVpHVm1ZWFZzZEM1emRtTXdIaGNOTVRreApNREl6TVRJME5EVTRXaGNOTkRjd016RXdNVEkwTkRVNFdqQTFNVE13TVFZRFZRUUREQ3BwYm1keVpYTnpMV2h2CmMzUXRkbUZzYVdSaGRHOXlMWGRsWW1odmIyc3VaR1ZtWVhWc2RDNXpkbU13Z2dFaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUM0ZW5HcDJycVpoTHkzdENJOVQrUEpGZEFFa2RwUnkzMGwzYWFIdWx5cApLc21TMlI2aVpaWXhnQlVLbUtTd3M5dXVMUklyWFNMVjRtSmZ1SS8xbFNJV3RrNkFLOFdWajFNR2E4bVZhMGZTCmlDaHdrZWpOZHJCclRXNzZuMDhGRElTTlBabU5xNTZKSzlwSGFvalU4MlVUMzFlMUx1d0c4U1BGYUxFMmxXcUEKMUY2U2pFbjBFb0ZVNWRYS3VGamZ1ZTN6TnJ5NFZvY0lSZ2xWM3ZEbitzdnkxWVYzYUpDM1grdVk4Ti9LcUJZdwpGWEkvcDllNTdJMklXZEt1bHZJajRka1drMFdJVlIzbnJCU0tDYkQyaHdHMEJjcHJJTE96QXkwZGFkcldNdUQ2CmZFS0NVQ0xxWWx2ZEJNSlRlYkFIUXJxQ3lkUWlBNElYZzhDa096SlROSnVmQWdNQkFBRXdEUVlKS29aSWh2Y04KQVFFTEJRQURnZ0VCQUNIQ1ZZVUZjTE05aHNIdXlYOVVtanliOW9OMzJjbmQyd2pxZmdsbWV5TzhFY3BlRHlYVQpIczAzaVg1aW4wdFR6R2lHeDJkOC9YcHpQZ1VzSFBGVHZxTjZCdWpGU2dJRXkwamZOblhmclVxMk4yZW9VR2dWClBuWm54SkNHRWFJb0NkbkZaRnZvZG5OMkdsQ1Ryb0sySmdLd1JnWi9wYlhhQ0gzN3V6d2szTUtpdUxjMmNFZC8KS1duN0JYU2VFQW1UNUdQb2g4dkI0dmdnSDd6OU1sMWt3UWMvQ1pmZlVtMnBwQ0hhTEJ2bnNBM3hyQWZwTUZPMwpRWDR0MzJhNEhMM0d3Q3BlMGRONS9LOEplMGN0bkxVc0ZTZFNqTmxHbWtEQnM2eG1oVEIyU25NbllYdWdBaCtGCmVRd0pCZkZJNjhXM2hLTmxHdllURnlrVlBuK3NKeWl1SkFZPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    rules:
+      - operations: [ "CREATE", "UPDATE" ]
+        apiGroups: ["extensions"]
+        apiVersions: ["v1beta1"]
+        resources: ["ingresses"]
