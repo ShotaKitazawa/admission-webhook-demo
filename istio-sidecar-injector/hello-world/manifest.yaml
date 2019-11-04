@@ -13,7 +13,7 @@ metadata:
   labels:
     app: hello-world
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: hello-world
@@ -26,7 +26,8 @@ spec:
       - image: zembutsu/docker-sample-nginx:latest
         name: hello-world
         ports:
-        - containerPort: 80
+        - name: http
+          containerPort: 80
 ---
 apiVersion: v1
 kind: Service

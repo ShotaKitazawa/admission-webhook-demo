@@ -67,13 +67,13 @@ metadata:
     release: release-name
     istio: sidecar-injector
 spec:
-  loadBalancerIP: 192.168.0.55
+  #loadBalancerIP: 192.168.0.55
   ports:
   - port: 443
-    nodePort: 30443
+    #nodePort: 30443
   selector:
     istio: sidecar-injector
-  type: LoadBalancer
+  #type: LoadBalancer
 
 ---
 # Source: sidecarInjectorWebhook/templates/deployment.yaml
@@ -111,7 +111,7 @@ spec:
           image: "istio/sidecar_injector:1.1.17"
           imagePullPolicy: IfNotPresent
           args:
-            - --caCertFile=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            - --caCertFile=/etc/istio/certs/ca.crt
             - --tlsCertFile=/etc/istio/certs/tls.crt
             - --tlsKeyFile=/etc/istio/certs/tls.key
             - --injectConfig=/etc/istio/inject/config
@@ -176,10 +176,12 @@ metadata:
 webhooks:
   - name: sidecar-injector.istio.io
     clientConfig:
+      #url: https://istio-sidecar-injector.istio-system.svc:443/inject
       service:
         name: istio-sidecar-injector
         namespace: istio-system
         path: "/inject"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMvRENDQWVRQ0NRRDFxazRPbjFZaVhqQU5CZ2txaGtpRzl3MEJBUXNGQURCQU1UNHdQQVlEVlFRREREVnAKYzNScGJ5MXphV1JsWTJGeUxXbHVhbVZqZEc5eUxtbHpkR2x2TFhONWMzUmxiUzV6ZG1NdVkyeDFjM1JsY2k1cwpiMk5oYkRBZUZ3MHhPVEV4TURRd056UTNNak5hRncwME56QXpNakl3TnpRM01qTmFNRUF4UGpBOEJnTlZCQU1NCk5XbHpkR2x2TFhOcFpHVmpZWEl0YVc1cVpXTjBiM0l1YVhOMGFXOHRjM2x6ZEdWdExuTjJZeTVqYkhWemRHVnkKTG14dlkyRnNNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXUyMjNmRWVMbkpQTQp1TlA5VDEzU0dmNS8vellaQ3FSWXdnYmNzc0J1aGN5Y3UwcUNwcVlOMUhaOGhsUW90L2g0M1N6anJhQjdqSzVNCjNiRzgxdGc5dUM2WFpHUFBIZVhoNXdNUHNoeERhVU1hRm9RYTNTc0JScjZwdXpoUFN1QUhkN2FsL1d3TVNmZTMKWGFIMDg5Tng1cDRVdTQwdFBSMWVkYlhOWEIvMVQxRHM5eFc5eUM3WHBZWi9Va3BPZExuclJxdDkwOVAzSGhWdgo5S3ovWFV1TmpPd1hyaVhZQjdJZGQxa1RBSW05aGVwMFpHTzVheUJwekp1ektWeXo0VHg3WHcwV25WTHNMNDhwCmZNeUVlTjk0VWVvWW53TnM0bkpQbldiZVZnODA4dzRFcjlEbVNQbVR6NFNkNUdha1pWVmd3cmhoN2Q4Z0VWaEgKWTR2VzVFWktQUUlEQVFBQk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQk5ZQ2NLZEYxWXowbktKYTk2cnUwVQpUUUx2TXJJY0RWNFFqeURYdW5Kd0l5Wm5GenZtYThENm5ON2Fha0tGdjFWNS9WS29qa25TdjROTEJHRFF1cVNCCmdqRDRZakVLM2MwV0VzMllGMXc5R1o2VkF6OXk1K2FFS1RRbzVCZUtEekZobmNveTRUbThCUmFJLzYzaXFTVmwKUHpreStnbEV3NEtQOVJoek1zc0tnNGJBWjI3RnFpMms2Q1pzWUNCY2V2eXNuVVBRMWMvbDdBRVRWK0ViWFF6awoxd0NSOU9BQkk4N1dGaHhuOFNFTStLUkhPeWN3REo4YjJJaCtibEt5a3B1b08yNktCVHcyeWd1VU1aY3dPb2NTCkZpYk93M2d6UGo1RHZ6Ti8zK2MyWmtkNS9ReitoRzlDWTlDbGhnUlh0YlA3YTJ3Z3JDU01HZ0pVMnR5djNwb0UKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
     rules:
       - operations: [ "CREATE" ]
         apiGroups: [""]
